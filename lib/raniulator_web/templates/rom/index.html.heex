@@ -1,0 +1,28 @@
+<h1>Listing Roms</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Url</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for rom <- @roms do %>
+    <tr>
+      <td><%= rom.name %></td>
+      <td><%= rom.url %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.rom_path(@conn, :show, rom) %></span>
+        <span><%= link "Edit", to: Routes.rom_path(@conn, :edit, rom) %></span>
+        <span><%= link "Delete", to: Routes.rom_path(@conn, :delete, rom), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Rom", to: Routes.rom_path(@conn, :new) %></span>

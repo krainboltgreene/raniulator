@@ -1,0 +1,18 @@
+<h1>Show Rom</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @rom.name %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @rom.url %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.rom_path(@conn, :edit, @rom) %></span> |
+<span><%= link "Back", to: Routes.rom_path(@conn, :index) %></span>

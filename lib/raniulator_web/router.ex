@@ -16,6 +16,7 @@ defmodule RaniulatorWeb.Router do
 
   scope "/", RaniulatorWeb do
     pipe_through :browser
+    resources "/roms", RomController
 
     get "/", PageController, :index
   end
