@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  codespace:
+    init: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker-host.sock
+    network_mode: service:livebook
+    restart: unless-stopped
+
+  livebook:
+    image: livebook/livebook:0.3.0
+    volumes:
+      - ../livebook/:/data/

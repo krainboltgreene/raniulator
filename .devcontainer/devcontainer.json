@@ -1,0 +1,36 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+  "name": "Project",
+  "dockerComposeFile": "docker-compose.yml",
+  "overrideCommand": false,
+  "userEnvProbe": "loginInteractiveShell",
+  "service": "codespace",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.automationShell.linux": "zsh",
+    "files.autoSave": "onFocusChange",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "javascript.format.semicolons": "insert",
+    "typescript.format.semicolons": "insert",
+    "terminal.integrated.copyOnSelection": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "elixirLS.fetchDeps": false,
+    "editor.tabSize": 2,
+  },
+  "remoteUser": "codespace",
+  "forwardPorts": [8080],
+  "workspaceFolder": "/home/codespace/source",
+  "extensions": [
+    "krainboltgreene.all-builtin-commands",
+    "ms-vscode.atom-keybindings",
+    "github.codespaces",
+    "ms-azuretools.vscode-docker",
+    "benvp.vscode-hex-pm-intellisense"
+  ],
+  "waitFor": "postStartCommand",
+  "postStartCommand": "/bin/zsh -i -c .devcontainer/postStart.sh"
+}
