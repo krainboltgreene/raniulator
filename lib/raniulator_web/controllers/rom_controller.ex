@@ -1,11 +1,9 @@
 defmodule RaniulatorWeb.RomController do
   use RaniulatorWeb, :controller
-
   def index(conn, _params) do
     roms = Raniulator.Roms.list_roms()
     render(conn, "index.html", roms: roms)
   end
-
   def create(conn, %{"rom" => rom_params}) do
     case Raniulator.Roms.create_rom(rom_params) do
       {:ok, rom} ->
@@ -20,7 +18,11 @@ defmodule RaniulatorWeb.RomController do
 
   @spec show(Plug.Conn.t(), map) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
-    rom = Raniulator.Roms.get_rom!(id)
-    render(conn, "show.html", rom: rom)
+    render(conn, "show.html", rom: Raniulator.Roms.get_rom!(id))
+  end
+
+  @spec body(Plug.Conn.t(), map) :: Plug.Conn.t()
+  def body(conn, %{"rom_id" => rom_id}) do
+    send_resp(conn, 200, Raniulator.Roms.get_rom!(rom_id).body)
   end
 end

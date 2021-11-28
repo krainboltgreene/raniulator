@@ -1,18 +1,31 @@
-<h1>Show Rom</h1>
+<script type="text/javascript" src="https://cdn.rawgit.com/takahirox/nes-js/v0.0.1/build/nes.min.js"></script>
+<script type="text/javascript">
+  function init() {
+    console.log("test")
+    var url = '/roms/<%= @rom.id %>/body';
+    var request = new XMLHttpRequest();
+    request.responseType = 'arraybuffer';
 
-<ul>
+    request.onload = function() {
+      var buffer = request.response;
+      var nes = new NesJs.Nes();
 
-  <li>
-    <strong>Name:</strong>
-    <%= @rom.name %>
-  </li>
+      nes.setRom(new NesJs.Rom(buffer));
+      nes.setDisplay(new NesJs.Display(document.getElementById('gameCanvas')));
+      nes.setAudio(new NesJs.Audio());
 
-  <li>
-    <strong>Url:</strong>
-    <%= @rom.url %>
-  </li>
+      window.onkeydown = function(e) { nes.handleKeyDown(e); };
+      window.onkeyup = function(e) { nes.handleKeyUp(e); };
 
-</ul>
+      nes.bootup();
+      nes.run();
+    };
 
-<span><%= link "Edit", to: Routes.rom_path(@conn, :edit, @rom) %></span> |
-<span><%= link "Back", to: Routes.rom_path(@conn, :index) %></span>
+    request.open('GET', url, true);
+    request.send(null);
+  }
+</script>
+
+<canvas id="gameCanvas" width="640" height="480"></canvas>
+
+<script type="text/javascript">init();</script>

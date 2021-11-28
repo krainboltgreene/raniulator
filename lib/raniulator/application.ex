@@ -15,9 +15,10 @@ defmodule Raniulator.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Raniulator.PubSub},
       # Start the Endpoint (http/https)
-      RaniulatorWeb.Endpoint
+      RaniulatorWeb.Endpoint,
       # Start a worker by calling: Raniulator.Worker.start_link(arg)
       # {Raniulator.Worker, arg}
+      {Finch, name: DropboxClient}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

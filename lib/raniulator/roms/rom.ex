@@ -6,7 +6,8 @@ defmodule Raniulator.Roms.Rom do
   @foreign_key_type :binary_id
   schema "roms" do
     field :name, :string
-    field :url, :string
+    field :body, :binary
+    field :hash, :string
 
     timestamps()
   end
@@ -14,7 +15,8 @@ defmodule Raniulator.Roms.Rom do
   @doc false
   def changeset(rom, attrs) do
     rom
-    |> cast(attrs, [:name, :url])
-    |> validate_required([:name, :url])
+    |> cast(attrs, [:name, :body, :hash])
+    |> validate_required([:name, :body, :hash])
+    |> unique_constraint([:name, :hash])
   end
 end

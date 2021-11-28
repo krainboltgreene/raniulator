@@ -48,7 +48,7 @@ defmodule Raniulator.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:elixir_dropbox, "0.0.8"},
+      {:finch, "~> 0.9"},
       {:plug_cowboy, "~> 2.5"}
     ]
   end
