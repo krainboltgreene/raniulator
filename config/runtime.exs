@@ -15,7 +15,7 @@ if config_env() == :prod do
       """
 
   config :raniulator, Raniulator.Repo,
-    # ssl: true,
+    ssl: true,
     # socket_options: [:inet6],
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
@@ -32,12 +32,19 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
+  # IMPORTANT: Get the app_name we're using
+  # app_name =
+  #   System.get_env("FLY_APP_NAME") ||
+  #     raise "FLY_APP_NAME not available"
+
   config :raniulator, RaniulatorWeb.Endpoint,
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
+      url: [scheme: "https", host: "infinite-reef-72763.herokuapp.com", port: 443],
+      force_ssl: [rewrite_on: [:x_forwarded_proto]],
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: String.to_integer(System.get_env("PORT") || "4000")
     ],
@@ -70,4 +77,7 @@ if config_env() == :prod do
   #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+
+  # IMPORTANT: Enable the endpoint for releases
+  config :raniulator, RaniulatorWeb.Endpoint, server: true
 end
