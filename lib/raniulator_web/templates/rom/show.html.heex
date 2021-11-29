@@ -1,31 +1,12 @@
-<script type="text/javascript" src="https://cdn.rawgit.com/takahirox/nes-js/v0.0.1/build/nes.min.js"></script>
 <script type="text/javascript">
-  function init() {
-    console.log("test")
-    var url = '/roms/<%= @rom.id %>/body';
-    var request = new XMLHttpRequest();
-    request.responseType = 'arraybuffer';
-
-    request.onload = function() {
-      var buffer = request.response;
-      var nes = new NesJs.Nes();
-
-      nes.setRom(new NesJs.Rom(buffer));
-      nes.setDisplay(new NesJs.Display(document.getElementById('gameCanvas')));
-      nes.setAudio(new NesJs.Audio());
-
-      window.onkeydown = function(e) { nes.handleKeyDown(e); };
-      window.onkeyup = function(e) { nes.handleKeyUp(e); };
-
-      nes.bootup();
-      nes.run();
-    };
-
-    request.open('GET', url, true);
-    request.send(null);
+  window.onload = function() {
+    window.nes_load_url("nes-canvas", "<%= Routes.rom_rom_path(@conn, :body, @rom) %>");
   }
 </script>
 
-<canvas id="gameCanvas" width="640" height="480"></canvas>
-
-<script type="text/javascript">init();</script>
+<div style="margin: auto; width: 85%;">
+  <canvas id="nes-canvas" width="256" height="240" style="width: 100%"/>
+</div>
+<p>
+  DPad: Arrow keys<br/>Start: Return, Select: Tab<br/>A Button: A, B Button: S
+</p>
