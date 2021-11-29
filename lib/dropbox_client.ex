@@ -21,11 +21,9 @@ defmodule DropboxClient do
           }
       } |> Jason.encode!()) |> Finch.request(__MODULE__)
 
-      v = response
+      response
       |> Map.get(:body)
       |> Jason.decode!()
-      IO.inspect(v)
-      v
       |> Map.get("entries")
       |> Enum.map(&download(&1, link))
   end
@@ -35,7 +33,7 @@ defmodule DropboxClient do
       :post,
       "https://content.dropboxapi.com/2/sharing/get_shared_link_file",
       [
-        {"Authorization", "Bearer #{@token}"},
+        {"Authorization", "Bearer #{System.get_env("DROPBOX_TOKEN")}"},
         {"Dropbox-API-Arg", %{"url" => link, "path" => "/#{name}"} |> Jason.encode!()}
       ]
     )
