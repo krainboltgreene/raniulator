@@ -1,13 +1,11 @@
 # DropboxClient.list_files("https://www.dropbox.com/sh/0d4q2gv92t8coep/AABZsrK-4z6e5M53g_NlXGSaa")
 defmodule DropboxClient do
-  @token "sl.A9JXwZ3KPPAS40PFXO5FsdCZqULAqVN2cGolGoPUiAI_jV8J-RzeVmQTJhrgR37-WRT_UdcqBP3t1xth-YEZ4PGuYLtyI7Fi5_kcLo0PvS6R2ANgxZzuBX2m1E-Op9F0czfLN1E"
-
   def pull_files(link) do
     {:ok, response} = Finch.build(
       :post,
       "https://api.dropboxapi.com/2/files/list_folder",
       [
-        {"Authorization", "Bearer #{@token}"},
+        {"Authorization", "Bearer #{System.get_env("DROPBOX_TOKEN")}"},
         {"Content-Type", "application/json"}
       ],
       %{
@@ -23,9 +21,11 @@ defmodule DropboxClient do
           }
       } |> Jason.encode!()) |> Finch.request(__MODULE__)
 
-      response
+      v = response
       |> Map.get(:body)
       |> Jason.decode!()
+      IO.inspect(v)
+      v
       |> Map.get("entries")
       |> Enum.map(&download(&1, link))
   end
